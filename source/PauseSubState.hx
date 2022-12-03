@@ -1,7 +1,7 @@
 package;
 
 import openfl.Lib;
-#if windows
+#if cpp
 import llua.Lua;
 #end
 import Controls.Control;
@@ -105,7 +105,7 @@ class PauseSubState extends MusicBeatSubstate
 		var rightP = controls.RIGHT_P;
 		var accepted = controls.ACCEPT;
 		var oldOffset:Float = 0;
-		var songPath = 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
+		var songPath = #if mobile SUtil.getStorageDirectory() + #end 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
 
 		if (upP)
 		{
@@ -228,7 +228,7 @@ class PauseSubState extends MusicBeatSubstate
 						FlxG.save.data.downscroll = false;
 					}
 					PlayState.loadRep = false;
-					#if windows
+					#if cpp
 					if (PlayState.luaModchart != null)
 					{
 						PlayState.luaModchart.die();
