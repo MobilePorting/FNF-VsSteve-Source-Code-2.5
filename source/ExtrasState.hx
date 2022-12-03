@@ -13,7 +13,6 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import io.newgrounds.NG;
 import lime.app.Application;
 import lime.system.System;
 
@@ -25,6 +24,9 @@ using StringTools;
 
 class ExtrasState extends MusicBeatState
 {
+        public static var selectedBonus:Bool;
+        public static var selectedOthers:Bool;
+
 	var curSelected:Int = 0;
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
@@ -246,14 +248,17 @@ class ExtrasState extends MusicBeatState
 		switch (daChoice)
 		{
 			case 'bonus songs':
-				FlxG.switchState(new FreeplayStateBonus());
+                                selectedBonus = true;
+                                selectedOthers = false;
+				FlxG.switchState(new FreeplayState());
 				trace("bonus songs!");
 
 			case 'other songs':
+                                selectedBonus = false;
+                                selectedOthers = true;
 				FlxG.sound.play(Paths.sound('cancelMenu'));			
-				//FlxG.switchState(new FreeplayStateOthers());
-				trace("Other Songs");
-				trace("Disabled!");
+				//FlxG.switchState(new FreeplayState());
+				trace("Other Songs Is Disabled!");
 		}
 	}
 
