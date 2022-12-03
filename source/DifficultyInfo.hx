@@ -14,7 +14,7 @@ import lime.app.Application;
 class DifficultyInfo extends MusicBeatState
 {
 	public static var leftStateWarn:Bool = false;
-	
+	var justTouched:Bool = false;
 	private var bgColors:Array<String> = [
 		'#314d7f',
 		'#4e7093',
@@ -26,6 +26,7 @@ class DifficultyInfo extends MusicBeatState
 	override function create()
 	{
 		super.create();
+		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuPNG', 'shared'));
 		bg.scale.x *= 2;
 		bg.scale.y *= 2;
@@ -38,11 +39,18 @@ class DifficultyInfo extends MusicBeatState
 		difficInfo.scale.y *= 0.8;
 		difficInfo.screenCenter();
 		add(difficInfo);
-		
+
+		#if mobile
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
+			"Touch to Proceed\n"
+
+			);
+                #else
+                var txt:FlxText = new FlxText(0, 0, FlxG.width,
 			"Press Enter to Proceed\n"
 
 			);
+                #end
 		
 		txt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.fromRGB(200, 200, 200), CENTER);
 		txt.borderColor = FlxColor.BLACK;
@@ -64,6 +72,21 @@ class DifficultyInfo extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+                #if mobile
+		for (touch in FlxG.touches.list)
+		if (touch.justPressed)
+		{
+                ExtrasState.selectedBonus = false;
+                ExtrasState.selectedOthers = false;
+		leftStateWarn = true;
+		FlxG.switchState(new FreeplayState());
+		}
+		else if (FlxG.android.justReleased.BACK)
+		{
+		leftStateWarn = true;
+		FlxG.switchState(new MainMenuState());
+		}
+                #else
 		if (controls.BACK)
 		{
 			leftStateWarn = true;
@@ -71,9 +94,12 @@ class DifficultyInfo extends MusicBeatState
 		}
 		else if (controls.ACCEPT)
 		{
+                        ExtrasState.selectedBonus = false;
+                        ExtrasState.selectedOthers = false;
 			leftStateWarn = true;
 			FlxG.switchState(new FreeplayState());
 		}
+                #end
 		super.update(elapsed);
 	}
 }
