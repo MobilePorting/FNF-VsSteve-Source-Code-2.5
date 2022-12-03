@@ -33,7 +33,7 @@ class LoadReplayState extends MusicBeatState
 	{
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         #if sys
-		controlsStrings = sys.FileSystem.readDirectory(Sys.getCwd() + "/assets/replays/");
+		controlsStrings = sys.FileSystem.readDirectory(#if mobile SUtil.getStorageDirectory() + #else Sys.getCwd() + #end "/assets/replays/");
         #end
 		trace(controlsStrings);
 
@@ -162,10 +162,6 @@ class LoadReplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		#if !switch
-		// NGio.logEvent('Fresh');
-		#end
-		
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		curSelected += change;
