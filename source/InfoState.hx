@@ -41,12 +41,20 @@ class InfoState extends MusicBeatState
 		kadeLogo.y -= 180;
 		kadeLogo.alpha = 0.8;
 		add(kadeLogo);
-		
+
+		#if mobileC
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
+			"DISCLAIMER!"
+			+ "\n\nIf you're a Content Creator, then you should maybe skip Revenge since its Copyrighted!\nThere's a small WHITE FLASH on Suit Up but should'nt be too bad!\n\nThis Mod is still not Done!!\n\nPress Space or ESCAPE or ENTER or Touch Your Screen to proceed"
+
+			);
+                #else
+                var txt:FlxText = new FlxText(0, 0, FlxG.width,
 			"DISCLAIMER!"
 			+ "\n\nIf you're a Content Creator, then you should maybe skip Revenge since its Copyrighted!\nThere's a small WHITE FLASH on Suit Up but should'nt be too bad!\n\nThis Mod is still not Done!!\n\nPress Space or ESCAPE or ENTER to proceed"
 
 			);
+                #end
 		
 		txt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.fromRGB(200, 200, 200), CENTER);
 		txt.borderColor = FlxColor.BLACK;
@@ -80,7 +88,7 @@ class InfoState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (controls.BACK || controls.ACCEPT)
+		if (controls.BACK || controls.ACCEPT #if mobileC || FlxG.mouse.pressed #end)
 		{
 			leftState = true;
 			FlxG.switchState(new MainMenuState());
