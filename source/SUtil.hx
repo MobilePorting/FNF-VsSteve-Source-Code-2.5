@@ -5,6 +5,7 @@ import android.Permissions;
 import android.content.Context;
 import android.os.Build;
 import android.widget.Toast;
+import android.os.Environment;
 #end
 import haxe.CallStack;
 import haxe.io.Path;
