@@ -3238,7 +3238,7 @@ class PlayState extends MusicBeatState
 
 		scoreTxt.text = Ratings.CalculateRanking(songScore,songScoreDef,nps,maxNPS,accuracy);
 
-		if (controls.PAUSE && startedCountdown && canPause)
+		if (#if android FlxG.android.justReleased.BACK || #end controls.PAUSE && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
