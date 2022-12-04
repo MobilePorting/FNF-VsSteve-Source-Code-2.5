@@ -102,6 +102,10 @@ class OptionsMenu extends MusicBeatState
 		FlxTween.tween(versionShit,{y: FlxG.height - 18},2,{ease: FlxEase.elasticInOut});
 		FlxTween.tween(blackBorder,{y: FlxG.height - 18},2, {ease: FlxEase.elasticInOut});
 
+                #if mobileC
+                addVirtualPad(LEFT_FULL, A_B_C);
+                #end
+
 		super.create();
 	}
 
@@ -152,16 +156,16 @@ class OptionsMenu extends MusicBeatState
 				{
 					if (FlxG.keys.pressed.SHIFT)
 						{
-							if (FlxG.keys.pressed.RIGHT)
+							if (#if mobileC virtualPad.buttonRight.justPressed || #end FlxG.keys.pressed.RIGHT)
 								currentSelectedCat.getOptions()[curSelected].right();
-							if (FlxG.keys.pressed.LEFT)
+							if (#if mobileC virtualPad.buttonLeft.justPressed || #end FlxG.keys.pressed.LEFT)
 								currentSelectedCat.getOptions()[curSelected].left();
 						}
 					else
 					{
-						if (FlxG.keys.justPressed.RIGHT)
+						if (#if mobileC virtualPad.buttonRight.justPressed || #end FlxG.keys.justPressed.RIGHT)
 							currentSelectedCat.getOptions()[curSelected].right();
-						if (FlxG.keys.justPressed.LEFT)
+						if (#if mobileC virtualPad.buttonLeft.justPressed || #end FlxG.keys.justPressed.LEFT)
 							currentSelectedCat.getOptions()[curSelected].left();
 					}
 				}
@@ -170,14 +174,14 @@ class OptionsMenu extends MusicBeatState
 
 					if (FlxG.keys.pressed.SHIFT)
 					{
-						if (FlxG.keys.justPressed.RIGHT)
+						if (#if mobileC virtualPad.buttonRight.justPressed || #end FlxG.keys.justPressed.RIGHT)
 							FlxG.save.data.offset += 0.1;
-						else if (FlxG.keys.justPressed.LEFT)
+						else if (#if mobileC virtualPad.buttonLeft.justPressed || #end FlxG.keys.justPressed.LEFT)
 							FlxG.save.data.offset -= 0.1;
 					}
-					else if (FlxG.keys.pressed.RIGHT)
+					else if (#if mobileC virtualPad.buttonRight.justPressed || #end FlxG.keys.pressed.RIGHT)
 						FlxG.save.data.offset += 0.1;
-					else if (FlxG.keys.pressed.LEFT)
+					else if (#if mobileC virtualPad.buttonLeft.justPressed || #end FlxG.keys.pressed.LEFT)
 						FlxG.save.data.offset -= 0.1;
 					
 				
@@ -191,14 +195,14 @@ class OptionsMenu extends MusicBeatState
 			{
 				if (FlxG.keys.pressed.SHIFT)
 					{
-						if (FlxG.keys.justPressed.RIGHT)
+						if (#if mobileC virtualPad.buttonRight.justPressed || #end FlxG.keys.justPressed.RIGHT)
 							FlxG.save.data.offset += 0.1;
-						else if (FlxG.keys.justPressed.LEFT)
+						else if (#if mobileC virtualPad.buttonLeft.justPressed || #end FlxG.keys.justPressed.LEFT)
 							FlxG.save.data.offset -= 0.1;
 					}
-					else if (FlxG.keys.pressed.RIGHT)
+					else if (#if mobileC virtualPad.buttonRight.justPressed || #end FlxG.keys.pressed.RIGHT)
 						FlxG.save.data.offset += 0.1;
-					else if (FlxG.keys.pressed.LEFT)
+					else if (#if mobileC virtualPad.buttonLeft.justPressed || #end FlxG.keys.pressed.LEFT)
 						FlxG.save.data.offset -= 0.1;
 			}
 		
