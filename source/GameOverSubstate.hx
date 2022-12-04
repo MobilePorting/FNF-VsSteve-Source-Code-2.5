@@ -31,6 +31,11 @@ class GameOverSubstate extends MusicBeatSubstate
 				daBf = 'bf';
 		}
 
+                #if mobileC
+                addVirtualPad(NONE, A_B);
+                addVirtualPadCamera();
+                #end
+
 		super();
 
 		Conductor.songPosition = 0;
