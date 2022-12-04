@@ -1678,6 +1678,8 @@ class PlayState extends MusicBeatState
 		doof.cameras = [camHUD];
 		hotbar.cameras = [camHUD];
 
+                #if mobileC addMobileControls(); #end
+
 		if(SONG.song.toLowerCase() == 'entity')
 			vignette.cameras = [camHUD];
 
@@ -1739,6 +1741,11 @@ class PlayState extends MusicBeatState
 
 		if (!loadRep)
 			rep = new Replay("na");
+
+                #if mobileC
+                addVirtualPad(NONE, A_B);
+                addVirtualPadCamera();
+                #end
 
 		super.create();
 	}
@@ -1892,11 +1899,12 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
+                #if mobileC mobileControls.visible = true; #end
+
 		inCutscene = false;
 
 		generateStaticArrows(0);
 		generateStaticArrows(1);
-
 
 		#if cpp
 		if (executeModchart)
@@ -3056,7 +3064,7 @@ class PlayState extends MusicBeatState
 		}
 		if(SONG.song.toLowerCase() == 'suit up')
 		{
-		if (FlxG.keys.justPressed.SPACE)
+		if (#if mobileC virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
 		{
 			boyfriend.playAnim('block', true);
 			if(oneTimeUse == false)
@@ -3098,7 +3106,7 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() != 'practice' || SONG.song.toLowerCase() != 'entity')
 		{
 			
-			if(FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.regenPotionBind)]) && oneTimeUse == false)
+			if(#if mobileC virtualPad.buttonA.justPressed || #end FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.regenPotionBind)]) && oneTimeUse == false)
 			{
 				if(SONG.song.toLowerCase() == 'suit up')
 					hotbar.animation.play('Potion', true);
@@ -4101,6 +4109,8 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
+                mobileControls.visible = false;
+
 		if (!loadRep)
 			rep.SaveReplay(saveNotes);
 		else
@@ -5254,7 +5264,7 @@ class PlayState extends MusicBeatState
 
 		function bfBlock()
 		{
-			if (FlxG.keys.justPressed.SPACE)
+			if (#if mobileC virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
 			{
 				boyfriend.playAnim('block', true);
 				if(oneTimeUse == false)
@@ -5365,7 +5375,7 @@ class PlayState extends MusicBeatState
 
 		function detectSpace()
 		{
-			if (FlxG.keys.justPressed.SPACE)
+			if (#if mobileC virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
 			{
 				pressCounter += 1;
 				trace('tap');
