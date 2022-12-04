@@ -89,6 +89,11 @@ class PauseSubState extends MusicBeatSubstate
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
+                #if android
+		addVirtualPad(LEFT_FULL, A);
+                addVirtualPadCamera();
+		#end
 	}
 
 
@@ -129,7 +134,7 @@ class PauseSubState extends MusicBeatSubstate
 				{
 					grpMenuShit.clear();
 
-					menuItems = ['Restart Song', 'Exit to menu'];
+					menuItems = ['Resume', 'Restart Song', 'Exit to freeplay','Exit to extras','Exit to menu'];
 
 					for (i in 0...menuItems.length)
 					{
@@ -154,7 +159,7 @@ class PauseSubState extends MusicBeatSubstate
 				{
 					grpMenuShit.clear();
 
-					menuItems = ['Restart Song', 'Exit to menu'];
+					menuItems = ['Resume', 'Restart Song', 'Exit to freeplay','Exit to extras','Exit to menu'];
 
 					for (i in 0...menuItems.length)
 					{
@@ -190,7 +195,7 @@ class PauseSubState extends MusicBeatSubstate
 						FlxG.save.data.downscroll = false;
 					}
 					PlayState.loadRep = false;
-					#if windows
+					#if cpp
 					if (PlayState.luaModchart != null)
 					{
 						PlayState.luaModchart.die();
@@ -209,7 +214,7 @@ class PauseSubState extends MusicBeatSubstate
 							FlxG.save.data.downscroll = false;
 						}
 						PlayState.loadRep = false;
-						#if windows
+						#if cpp
 						if (PlayState.luaModchart != null)
 						{
 							PlayState.luaModchart.die();
