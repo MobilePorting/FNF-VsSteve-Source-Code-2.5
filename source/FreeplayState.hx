@@ -173,7 +173,7 @@ class FreeplayState extends MusicBeatState
 		add(textBG);
 
                 #if PRELOAD_ALL
-		#if android
+		#if mobileC
 		var leText:String = "Press C to listen to the Song.";
 		var size:Int = 16;
 		#else
@@ -186,7 +186,7 @@ class FreeplayState extends MusicBeatState
 		add(text);
                 #end
 
-		#if android
+		#if mobileC
                 if (ExtrasState.selectedBonus == true) {
 		addVirtualPad(UP_DOWN, A_B_C); }
                 if (ExtrasState.selectedBonus == false) {
