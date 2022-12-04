@@ -316,10 +316,10 @@ class ModchartState
 				
 				//shaders = new Array<LuaShader>();
 
-                                /*#if mobile
+                                #if mobile
 				var result = LuaL.dostring(lua, openfl.utils.Assets.getText(Paths.lua(PlayState.SONG.song.toLowerCase() + "/modchart"))); // execute le file
-                                #end*/
-                                #if cpp
+                                #end
+                                #if desktop
 				var result = LuaL.dofile(lua, Paths.lua(PlayState.SONG.song.toLowerCase() + "/modchart")); // execute le file
                                 #end
 	
