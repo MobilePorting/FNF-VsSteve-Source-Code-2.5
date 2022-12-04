@@ -27,12 +27,10 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.input.FlxKeyManager;
 
-
 using StringTools;
 
 class KeyBindMenu extends FlxSubState
 {
-
     var keyTextDisplay:FlxText;
     var keyWarning:FlxText;
     var warningTween:FlxTween;
@@ -110,6 +108,10 @@ class KeyBindMenu extends FlxSubState
 
         textUpdate();
 
+        #if mobileC
+        addVirtualPad(NONE, B);
+        #end
+
 		super.create();
 	}
 
@@ -148,7 +150,7 @@ class KeyBindMenu extends FlxSubState
                     FlxG.sound.play(Paths.sound('scrollMenu'));
                     state = "input";
                 }
-                else if(FlxG.keys.justPressed.ESCAPE){
+                else if(#if mobileC virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.ESCAPE){
                     quit();
                 }
                 else if (FlxG.keys.justPressed.BACKSPACE){
