@@ -40,9 +40,9 @@ class DifficultyInfo extends MusicBeatState
 		difficInfo.screenCenter();
 		add(difficInfo);
 
-		#if mobile
+		#if mobileC
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"Touch to Proceed\n"
+			"Touch Your Screen or Enter to Proceed\n"
 
 			);
                 #else
@@ -72,34 +72,18 @@ class DifficultyInfo extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-                #if mobile
-		for (touch in FlxG.touches.list)
-		if (touch.justPressed)
-		{
-                ExtrasState.selectedBonus = false;
-                ExtrasState.selectedOthers = false;
-		leftStateWarn = true;
-		FlxG.switchState(new FreeplayState());
-		}
-		else if (FlxG.android.justReleased.BACK)
-		{
-		leftStateWarn = true;
-		FlxG.switchState(new MainMenuState());
-		}
-                #else
 		if (controls.BACK)
 		{
 			leftStateWarn = true;
 			FlxG.switchState(new MainMenuState());
 		}
-		else if (controls.ACCEPT)
+		else if (#if mobileC FlxG.mouse.pressed || #end controls.ACCEPT)
 		{
                         ExtrasState.selectedBonus = false;
                         ExtrasState.selectedOthers = false;
 			leftStateWarn = true;
 			FlxG.switchState(new FreeplayState());
 		}
-                #end
 		super.update(elapsed);
 	}
 }
