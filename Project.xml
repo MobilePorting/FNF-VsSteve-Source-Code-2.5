@@ -158,6 +158,12 @@
 	<haxedef name="HXCPP_STACK_TRACE"/>
 
 	<section if="android">
+                <!--Allow It's Game-->
+                <config:android isGame="true" />
+
+                <!--Allow Record Internal Audio-->
+                <config:android target-sdk-version="30" />
+
 		<!--Permissions-->
 		<config:android permission="android.permission.ACCESS_NETWORK_STATE" />
 		<config:android permission="android.permission.ACCESS_WIFI_STATE" />
