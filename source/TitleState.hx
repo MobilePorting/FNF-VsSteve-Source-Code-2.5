@@ -56,8 +56,8 @@ class TitleState extends MusicBeatState
                 FlxG.android.preventDefaultKeys = [BACK];
                 #end
 
-		if (!sys.FileSystem.exists(#if mobile SUtil.getStorageDirectory() + #else Sys.getCwd() + #end "/assets/replays"))
-			sys.FileSystem.createDirectory(#if mobile SUtil.getStorageDirectory() + #else Sys.getCwd() + #end "/assets/replays");
+		/*if (!sys.FileSystem.exists(#if mobile SUtil.getStorageDirectory() + #else Sys.getCwd() + #end "/assets/replays"))
+			sys.FileSystem.createDirectory(#if mobile SUtil.getStorageDirectory() + #else Sys.getCwd() + #end "/assets/replays");*/
 
 		@:privateAccess
 		{
