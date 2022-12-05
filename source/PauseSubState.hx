@@ -34,6 +34,11 @@ class PauseSubState extends MusicBeatSubstate
                 Paths.clearUnusedMemory();
                 Paths.clearStoredMemory();
 
+                #if mobileC
+		addVirtualPad(UP_DOWN, A);
+                addVirtualPadCamera();
+		#end
+
 		super();
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
@@ -92,11 +97,6 @@ class PauseSubState extends MusicBeatSubstate
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-
-                #if mobileC
-		addVirtualPad(UP_DOWN, A);
-                addVirtualPadCamera();
-		#end
 	}
 
 
