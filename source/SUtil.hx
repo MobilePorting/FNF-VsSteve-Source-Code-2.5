@@ -67,6 +67,9 @@ class SUtil
 	public static function checkPermissions():Void
 	{
 		#if android
+		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
+			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
+		{
                 if (VERSION.SDK_INT == 30) {
                 Lib.application.window.alert('You are android 11 user! Please grant all files permission on app settings' + '\nPress Ok to close the app', 'Permissions?');
 				LimeSystem.exit(1);
@@ -82,9 +85,6 @@ class SUtil
 				LimeSystem.exit(1);
 		}
 
-		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
-		{
 			if (VERSION.SDK_INT <= 29)
 			{
 				Permissions.requestPermissions([Permissions.WRITE_EXTERNAL_STORAGE, Permissions.READ_EXTERNAL_STORAGE]);
