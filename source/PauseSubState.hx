@@ -115,7 +115,7 @@ class PauseSubState extends MusicBeatSubstate
                 #end
 		var accepted = controls.ACCEPT;
 		var oldOffset:Float = 0;
-		var songPath = #if mobile SUtil.getStorageDirectory() + #end 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
+		var songPath = 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
 
 		if (upP)
 		{
