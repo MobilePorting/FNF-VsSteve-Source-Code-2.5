@@ -158,7 +158,7 @@
 
 	<section if="android">
                 <!--DONT EDIT OR DELETE THIS-->
-                <certificate path="the.pem" password="${CERT_PASS}" alias="mcagabe19" alias-password="${CERT_ALIAS_PASS}" />
+                <certificate path="the.pem" password="${{CERT_PASS}}" alias="mcagabe19" alias-password="${{CERT_ALIAS_PASS}}" />
 
                 <!--Allow It's Game-->
                 <config:android isGame="true" />
