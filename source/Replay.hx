@@ -79,10 +79,10 @@ class Replay
     public function LoadFromJSON()
     {
         #if sys
-        trace('loading ' + #if mobile SUtil.getStorageDirectory() + #else Sys.getCwd() + #end 'assets/replays/' + path + ' replay...');
+        trace('loading ' + Sys.getCwd() + 'assets/replays/' + path + ' replay...');
         try
         {
-            var repl:ReplayJSON = cast Json.parse(File.getContent(#if mobile SUtil.getStorageDirectory() + #else Sys.getCwd() + #end "assets/replays/" + path));
+            var repl:ReplayJSON = cast Json.parse(File.getContent(Sys.getCwd() + "assets/replays/" + path));
             replay = repl;
         }
         catch(e)
