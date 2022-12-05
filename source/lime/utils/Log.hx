@@ -40,18 +40,6 @@ class Log
 			if (throwErrors)
 			{
 				#if sys
-				if (!FileSystem.exists(SUtil.getStorageDirectory() + 'logs'))
-					FileSystem.createDirectory(SUtil.getStorageDirectory() + 'logs');
-
-				File.saveContent(SUtil.getStorageDirectory()
-					+ 'logs/'
-					+ Lib.application.meta.get('file')
-					+ '-'
-					+ Date.now().toString().replace(' ', '-').replace(':', "'")
-					+ '.log',
-					message
-					+ '\n');
-
 				Sys.println(message);
 				Lib.application.window.alert(message, 'Error!');
 				System.exit(1);
