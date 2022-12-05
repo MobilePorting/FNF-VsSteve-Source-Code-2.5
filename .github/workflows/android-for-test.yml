@@ -58,6 +58,9 @@ jobs:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       - name: Compile
         run: haxelib run lime build android -armv7 -D no-compilation -D luajit_static -D macro-times -D analyzer-optimize -${{ matrix.arch }} --app-version="4.0.0-${{ github.run_id}}"
+        env:
+          cert_pass: ${{ secrets.cert_pass }}
+          cert_alias_pass: ${{ secrets.cert_alias_pass }}
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
