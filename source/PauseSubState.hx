@@ -77,7 +77,7 @@ class PauseSubState extends MusicBeatSubstate
 		perSongOffset.scrollFactor.set();
 		perSongOffset.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
-		#if cpp
+		#if windows
 			add(perSongOffset);
 		#end
 
@@ -93,8 +93,8 @@ class PauseSubState extends MusicBeatSubstate
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
-                #if android
-		addVirtualPad(LEFT_FULL, A);
+                #if mobileC
+		addVirtualPad(UP_DOWN, A);
                 addVirtualPadCamera();
 		#end
 	}
@@ -109,8 +109,10 @@ class PauseSubState extends MusicBeatSubstate
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
+                #if windows
 		var leftP = controls.LEFT_P;
 		var rightP = controls.RIGHT_P;
+                #end
 		var accepted = controls.ACCEPT;
 		var oldOffset:Float = 0;
 		var songPath = #if mobile SUtil.getStorageDirectory() + #end 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
@@ -124,7 +126,7 @@ class PauseSubState extends MusicBeatSubstate
 			changeSelection(1);
 		}
 		
-		#if cpp
+		#if windows
 			else if (leftP)
 			{
 				oldOffset = PlayState.songOffset;
