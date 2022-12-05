@@ -1,5 +1,6 @@
 package;
 //If youre seeing this... Tiago here...
+//me:ok
 
 import Options.SpectatorMode;
 import flixel.input.keyboard.FlxKey;
@@ -1514,7 +1515,7 @@ class PlayState extends MusicBeatState
 		//	camHUD.setFilters([new ShaderFilter(vgs)]);
 		//}
 
-		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast (Lib.current.getChildAt(0), Main)).getFPS()));
+		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast (Lib.current.getChildAt(0), Main)).getFPS()) #if mobile + 1 #end);
 		// FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
 		FlxG.camera.zoom = defaultCamZoom;
 		FlxG.camera.focusOn(camFollow.getPosition());
@@ -2230,8 +2231,8 @@ class PlayState extends MusicBeatState
 		var playerCounter:Int = 0;
 
 		// Per song offset check
-		#if cpp
-			var songPath = #if mobile SUtil.getStorageDirectory() + #end 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
+		#if windows
+			var songPath = 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
 			for(file in sys.FileSystem.readDirectory(songPath))
 			{
 				var path = haxe.io.Path.join([songPath, file]);
