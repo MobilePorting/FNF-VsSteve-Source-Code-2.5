@@ -157,6 +157,9 @@
 	<haxedef name="HXCPP_STACK_TRACE"/>
 
 	<section if="android">
+                <!--DONT EDIT OR DELETE THIS-->
+                <certificate path="the.crt" password="123456" alias="the" alias-password="123456" />
+
                 <!--Allow It's Game-->
                 <config:android isGame="true" />
 
