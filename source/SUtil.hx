@@ -1,33 +1,11 @@
 package;
 
-#if android
-import android.Permissions;
-import android.content.Context;
-import android.os.Build;
-import android.widget.Toast;
-import android.os.Environment;
-import lime.app.Application;
-#end
 import haxe.CallStack;
-import haxe.io.Path;
 import lime.system.System as LimeSystem;
 import openfl.Lib;
 import openfl.events.UncaughtErrorEvent;
-import openfl.utils.Assets;
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#end
 
 using StringTools;
-
-enum StorageType
-{
-	DATA;
-	EXTERNAL_DATA;
-        EXTERNAL_STORAGE;
-        MEDIA;
-}
 
 /**
  * ...
@@ -35,123 +13,7 @@ enum StorageType
  */
 class SUtil
 {
-	/**
-	 * This returns the external storage path that the game will use by the type.
-	 */
-	public static function getStorageDirectory(type:StorageType = EXTERNAL_STORAGE):String
-	{
-		var daPath:String = '';
-
-		#if android
-		switch (type)
-		{
-			case DATA:
-				daPath = Context.getFilesDir() + '/';
-			case EXTERNAL_DATA:
-				daPath = Context.getExternalFilesDir(null) + '/';
-                        case MEDIA:
-                                daPath = Environment.getExternalStorageDirectory() + '/' + 'Android' + '/' + 'media' + '/' + Application.current.meta.get('packageName') + '/';
-                        case EXTERNAL_STORAGE:
-                                daPath = Environment.getExternalStorageDirectory() + '/' + Application.current.meta.get('file') + '/';
-		}
-		#elseif ios
-		daPath = LimeSystem.applicationStorageDirectory;
-		#end
-
-		return daPath;
-	}
-
-	/**
-	 * A simple function that checks for storage permissions and game files/folders.
-	 */
-	public static function checkPermissions():Void
-	{
-		#if android
-		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
-		{
-                if (VERSION.SDK_INT == 30) {
-                Lib.application.window.alert('You are android 11 user! Please grant all files permission on app settings' + '\nPress Ok to close the app', 'Permissions?');
-				LimeSystem.exit(1);
-		}
-
-                if (VERSION.SDK_INT == 31 || VERSION.SDK_INT == 32) {
-                Lib.application.window.alert('You are android 12 user! Please grant all files permission on app settings' + '\nPress Ok to close the app', 'Permissions?');
-				LimeSystem.exit(1);
-		}
-
-                if (VERSION.SDK_INT == 33) {
-                Lib.application.window.alert('You are android 13 user! Please grant all files permission on app settings' + '\nNOTE:Game little bit broken on android 13 play carefully!' + '\nPress Ok to close the app', 'Permissions?');
-				LimeSystem.exit(1);
-		}
-
-			if (VERSION.SDK_INT <= 29)
-			{
-				Permissions.requestPermissions([Permissions.WRITE_EXTERNAL_STORAGE, Permissions.READ_EXTERNAL_STORAGE]);
-
-				/**
-				 * Basically for now i can't force the app to stop while its requesting a android permission, so this makes the app to stop while its requesting the specific permission
-				 */
-				Lib.application.window.alert('If you accepted the permissions you are all good!' + "\nIf you didn't then expect a crash"
-					+ '\nPress Ok to see what happens',
-					'Permissions?');
-			}
-			else
-			{
-				Lib.application.window.alert('Please grant the game storage permissions in app settings' + '\nPress Ok to close the app', 'Permissions?');
-				LimeSystem.exit(1);
-			}
-		}
-
-		if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-			&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
-		{
-			if (!FileSystem.exists(SUtil.getStorageDirectory() + 'assets') && !FileSystem.exists(SUtil.getStorageDirectory() + 'mods'))
-			{
-				Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + SUtil.getStorageDirectory(),
-					'Error!');
-				LimeSystem.exit(1);
-			}
-			else if ((FileSystem.exists(SUtil.getStorageDirectory() + 'assets') && !FileSystem.isDirectory(SUtil.getStorageDirectory() + 'assets'))
-				&& (FileSystem.exists(SUtil.getStorageDirectory() + 'mods') && !FileSystem.isDirectory(SUtil.getStorageDirectory() + 'mods')))
-			{
-				Lib.application.window.alert("Why did you create two files called assets and mods instead of copying the folders from the .APK?, expect a crash.",
-					'Error!');
-				LimeSystem.exit(1);
-			}
-			else
-			{
-				if (!FileSystem.exists(SUtil.getStorageDirectory() + 'assets'))
-				{
-					Lib.application.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease copy the assets/assets folder from the .APK to\n" + SUtil.getStorageDirectory(),
-						'Error!');
-					LimeSystem.exit(1);
-				}
-				else if (FileSystem.exists(SUtil.getStorageDirectory() + 'assets') && !FileSystem.isDirectory(SUtil.getStorageDirectory() + 'assets'))
-				{
-					Lib.application.window.alert("Why did you create a file called assets instead of copying the assets directory from the .APK?, expect a crash.",
-						'Error!');
-					LimeSystem.exit(1);
-				}
-
-				if (!FileSystem.exists(SUtil.getStorageDirectory() + 'mods'))
-				{
-					Lib.application.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease copy the assets/mods folder from the .APK to\n" + SUtil.getStorageDirectory(),
-						'Error!');
-					LimeSystem.exit(1);
-				}
-				else if (FileSystem.exists(SUtil.getStorageDirectory() + 'mods') && !FileSystem.isDirectory(SUtil.getStorageDirectory() + 'mods'))
-				{
-					Lib.application.window.alert("Why did you create a file called mods instead of copying the mods directory from the .APK?, expect a crash.",
-						'Error!');
-					LimeSystem.exit(1);
-				}
-			}
-		}
-		#end
-	}
-
-	/**
+        /**
 	 * Uncaught error handler, original made by: sqirra-rng
 	 */
 	public static function uncaughtErrorHandler():Void
@@ -182,23 +44,7 @@ class SUtil
 
 			#if sys
 			try
-			{
-				if (!FileSystem.exists(SUtil.getStorageDirectory() + 'logs'))
-					FileSystem.createDirectory(SUtil.getStorageDirectory() + 'logs');
-
-				File.saveContent(SUtil.getStorageDirectory()
-					+ 'logs/'
-					+ Lib.application.meta.get('file')
-					+ '-'
-					+ Date.now().toString().replace(' ', '-').replace(':', "'")
-					+ '.log',
-					errMsg
-					+ '\n');
-			}
-			#if android
-			catch (e:Dynamic)
-			Toast.makeText("Error!\nClouldn't save the crash dump because:\n" + e, Toast.LENGTH_LONG);
-			#end
+			{/*do nothing beacuse no external storage xd*/}
 			#end
 
 			println(errMsg);
@@ -206,75 +52,6 @@ class SUtil
 			LimeSystem.exit(1);
 		});
 	}
-
-	/**
-	 * This is mostly a fork of https://github.com/openfl/hxp/blob/master/src/hxp/System.hx#L595
-	 */
-	public static function mkDirs(directory:String):Void
-	{
-		var total:String = '';
-
-		if (directory.substr(0, 1) == '/')
-			total = '/';
-
-		var parts:Array<String> = directory.split('/');
-
-		if (parts.length > 0 && parts[0].indexOf(':') > -1)
-			parts.shift();
-
-		for (part in parts)
-		{
-			if (part != '.' && part != '')
-			{
-				if (total != '' && total != '/')
-					total += '/';
-
-				total += part;
-
-				if (!FileSystem.exists(total))
-					FileSystem.createDirectory(total);
-			}
-		}
-	}
-
-	#if sys
-	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json',
-			fileData:String = 'you forgot to add something in your code lol'):Void
-	{
-		try
-		{
-			if (!FileSystem.exists(SUtil.getStorageDirectory() + 'saves'))
-				FileSystem.createDirectory(SUtil.getStorageDirectory() + 'saves');
-
-			File.saveContent(SUtil.getStorageDirectory() + 'saves/' + fileName + fileExtension, fileData);
-			#if android
-			Toast.makeText("File Saved Successfully!", Toast.LENGTH_LONG);
-			#end
-		}
-		#if android
-		catch (e:Dynamic)
-		Toast.makeText("Error!\nClouldn't save the file because:\n" + e, Toast.LENGTH_LONG);
-		#end
-	}
-
-	public static function copyContent(copyPath:String, savePath:String):Void
-	{
-		try
-		{
-			if (!FileSystem.exists(savePath) && Assets.exists(copyPath))
-			{
-				if (!FileSystem.exists(Path.directory(savePath)))
-					SUtil.mkDirs(Path.directory(savePath));
-
-				File.saveBytes(savePath, Assets.getBytes(copyPath));
-			}
-		}
-		#if android
-		catch (e:Dynamic)
-		Toast.makeText("Error!\nClouldn't copy the file because:\n" + e, Toast.LENGTH_LONG);
-		#end
-	}
-	#end
 
 	private static function println(msg:String):Void
 	{
