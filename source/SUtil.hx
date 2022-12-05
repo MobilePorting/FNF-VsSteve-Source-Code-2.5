@@ -25,6 +25,7 @@ enum StorageType
 {
 	DATA;
 	EXTERNAL_DATA;
+        EXTERNAL_STORAGE;
         MEDIA;
 }
 
@@ -37,7 +38,7 @@ class SUtil
 	/**
 	 * This returns the external storage path that the game will use by the type.
 	 */
-	public static function getStorageDirectory(type:StorageType = MEDIA):String
+	public static function getStorageDirectory(type:StorageType = EXTERNAL_STORAGE):String
 	{
 		var daPath:String = '';
 
@@ -49,7 +50,9 @@ class SUtil
 			case EXTERNAL_DATA:
 				daPath = Context.getExternalFilesDir(null) + '/';
                         case MEDIA:
-                                daPath = Environment.getExternalStorageDirectory() + '/' + 'Android' + 'media' + Application.current.meta.get('packageName') + '/';
+                                daPath = Environment.getExternalStorageDirectory() + '/' + 'Android' + '/' + 'media' + '/' + Application.current.meta.get('packageName') + '/';
+                        case EXTERNAL_STORAGE:
+                                daPath = Environment.getExternalStorageDirectory() + '/' + Application.current.meta.get('file') + '/';
 		}
 		#elseif ios
 		daPath = LimeSystem.applicationStorageDirectory;
