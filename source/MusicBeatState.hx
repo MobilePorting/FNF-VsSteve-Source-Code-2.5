@@ -32,7 +32,7 @@ class MusicBeatState extends FlxUIState
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
-        #if mobileC
+	#if mobileC
 	var mobileControls:MobileControls;
 	var virtualPad:FlxVirtualPad;
 	var trackedInputsMobileControls:Array<FlxActionInput> = [];
@@ -53,7 +53,7 @@ class MusicBeatState extends FlxUIState
 
 	public function removeVirtualPad()
 	{
-		if (trackedInputsVirtualPad != [])
+		if (trackedInputsVirtualPad.length > 0)
 			controls.removeVirtualControlsInput(trackedInputsVirtualPad);
 
 		if (virtualPad != null)
@@ -92,7 +92,7 @@ class MusicBeatState extends FlxUIState
 
 	public function removeMobileControls()
 	{
-		if (trackedInputsMobileControls != [])
+		if (trackedInputsMobileControls.length > 0)
 			controls.removeVirtualControlsInput(trackedInputsMobileControls);
 
 		if (mobileControls != null)
@@ -114,10 +114,10 @@ class MusicBeatState extends FlxUIState
 	override function destroy()
 	{
 		#if mobileC
-		if (trackedInputsMobileControls != [])
+		if (trackedInputsMobileControls.length > 0)
 			controls.removeVirtualControlsInput(trackedInputsMobileControls);
 
-		if (trackedInputsVirtualPad != [])
+		if (trackedInputsVirtualPad.length > 0)
 			controls.removeVirtualControlsInput(trackedInputsVirtualPad);
 		#end
 
