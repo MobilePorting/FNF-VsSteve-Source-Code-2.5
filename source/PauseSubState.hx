@@ -31,15 +31,10 @@ class PauseSubState extends MusicBeatSubstate
 
 	public function new(x:Float, y:Float)
 	{
+		super();
+
                 Paths.clearUnusedMemory();
                 Paths.clearStoredMemory();
-
-                #if mobileC
-		addVirtualPad(UP_DOWN, A);
-                addVirtualPadCamera();
-		#end
-
-		super();
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
@@ -82,7 +77,7 @@ class PauseSubState extends MusicBeatSubstate
 		perSongOffset.scrollFactor.set();
 		perSongOffset.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
-		#if windows
+		#if cpp
 			add(perSongOffset);
 		#end
 
@@ -97,8 +92,12 @@ class PauseSubState extends MusicBeatSubstate
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-	}
 
+                #if android
+		addVirtualPad(UP_DOWN, A);
+                addVirtualPadCamera();
+		#end
+	}
 
 	override function update(elapsed:Float)
 	{
@@ -107,27 +106,20 @@ class PauseSubState extends MusicBeatSubstate
 
 		super.update(elapsed);	
 
-		var upP = controls.UP_P;
-		var downP = controls.DOWN_P;
-                #if windows
-		var leftP = controls.LEFT_P;
-		var rightP = controls.RIGHT_P;
-                #end
-		var accepted = controls.ACCEPT;
 		var oldOffset:Float = 0;
 		var songPath = 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
 
-		if (upP)
+		if (#if android virtualPad.buttonUp.justPressed || #end controls.UP_P)
 		{
 			changeSelection(-1);
    
-		}else if (downP)
+		}else if (#if android virtualPad.buttonDown.justPressed || #end controls.DOWN_P)
 		{
 			changeSelection(1);
 		}
 		
-		#if windows
-			else if (leftP)
+		#if cpp
+			else if (#if android virtualPad.buttonLeft.justPressed || #end controls.LEFT_P)
 			{
 				oldOffset = PlayState.songOffset;
 				PlayState.songOffset -= 1;
@@ -139,7 +131,7 @@ class PauseSubState extends MusicBeatSubstate
 				{
 					grpMenuShit.clear();
 
-					menuItems = ['Resume', 'Restart Song', 'Exit to freeplay','Exit to extras','Exit to menu'];
+					menuItems = ['Restart Song', 'Exit to menu'];
 
 					for (i in 0...menuItems.length)
 					{
@@ -154,7 +146,7 @@ class PauseSubState extends MusicBeatSubstate
 					cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 					offsetChanged = true;
 				}
-			}else if (rightP)
+			}else if (#if android virtualPad.buttonRight.justPressed || #end controls.RIGHT_P)
 			{
 				oldOffset = PlayState.songOffset;
 				PlayState.songOffset += 1;
@@ -164,7 +156,7 @@ class PauseSubState extends MusicBeatSubstate
 				{
 					grpMenuShit.clear();
 
-					menuItems = ['Resume', 'Restart Song', 'Exit to freeplay','Exit to extras','Exit to menu'];
+					menuItems = ['Restart Song', 'Exit to menu'];
 
 					for (i in 0...menuItems.length)
 					{
@@ -182,7 +174,7 @@ class PauseSubState extends MusicBeatSubstate
 			}
 		#end
 
-		if (accepted)
+		if (#if android virtualPad.buttonA.justPressed || #end controls.ACCEPT)
 		{
 			var daSelected:String = menuItems[curSelected];
 
@@ -200,13 +192,11 @@ class PauseSubState extends MusicBeatSubstate
 						FlxG.save.data.downscroll = false;
 					}
 					PlayState.loadRep = false;
-					#if cpp
-					if (PlayState.luaModchart != null)
+					#if cpp if (PlayState.luaModchart != null)
 					{
 						PlayState.luaModchart.die();
 						PlayState.luaModchart = null;
-					}
-					#end
+					}#end
 					if (FlxG.save.data.fpsCap > 290)
 						(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
 					
@@ -219,16 +209,15 @@ class PauseSubState extends MusicBeatSubstate
 							FlxG.save.data.downscroll = false;
 						}
 						PlayState.loadRep = false;
-						#if cpp
-						if (PlayState.luaModchart != null)
+						#if cpp if (PlayState.luaModchart != null)
 						{
 							PlayState.luaModchart.die();
 							PlayState.luaModchart = null;
-						}
-						#end
+						}#end
 						if (FlxG.save.data.fpsCap > 290)
 							(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
-						
+					ExtrasState.selectedBonus = false;
+                                        ExtrasState.selectedOthers = false;
 					FlxG.switchState(new FreeplayState());
 				case "Exit to extras":
 					if(PlayState.loadRep)
@@ -238,13 +227,11 @@ class PauseSubState extends MusicBeatSubstate
 						FlxG.save.data.downscroll = false;
 					}
 					PlayState.loadRep = false;
-					#if cpp
-					if (PlayState.luaModchart != null)
+					#if cpp if (PlayState.luaModchart != null)
 					{
 						PlayState.luaModchart.die();
 						PlayState.luaModchart = null;
-					}
-					#end
+					}#end
 					if (FlxG.save.data.fpsCap > 290)
 						(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
 						
