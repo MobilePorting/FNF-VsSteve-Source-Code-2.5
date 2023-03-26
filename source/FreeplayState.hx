@@ -191,7 +191,12 @@ class FreeplayState extends MusicBeatState
 		addVirtualPad(UP_DOWN, A_B_C); }
                 if (ExtrasState.selectedBonus == false) {
                 addVirtualPad(LEFT_FULL, A_B_C); }
-		#end
+		#elseif mobileCweb
+                if (ExtrasState.selectedBonus == true) {
+		addVirtualPad(UP_DOWN, A_B); }
+                if (ExtrasState.selectedBonus == false) {
+                addVirtualPad(LEFT_FULL, A_B); }
+                #end
 
 		super.create();
 	}
@@ -270,7 +275,7 @@ class FreeplayState extends MusicBeatState
 			}});
 			}
 
-		if (#if android virtualPad.buttonA.justPressed || #end FlxG.keys.justPressed.ENTER)
+		if (#if (mobileC || mobileCweb) virtualPad.buttonA.justPressed || #end FlxG.keys.justPressed.ENTER)
 		{
 			destroyFreeplayVocals();
 
@@ -286,7 +291,7 @@ class FreeplayState extends MusicBeatState
 			LoadingState.loadAndSwitchState(new PlayState());
 		}
 
-                if(#if mobile virtualPad.buttonC.justPressed || #end FlxG.keys.justPressed.SPACE) {
+                if(#if mobileC virtualPad.buttonC.justPressed || #end FlxG.keys.justPressed.SPACE) {
                 if(instPlaying != curSelected) {
                 #if PRELOAD_ALL
 		destroyFreeplayVocals();
