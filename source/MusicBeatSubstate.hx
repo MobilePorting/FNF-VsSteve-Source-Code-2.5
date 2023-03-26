@@ -3,7 +3,7 @@ package;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
-#if mobileC
+#if (mobileC || mobileCweb)
 import mobile.flixel.FlxVirtualPad;
 import flixel.FlxCamera;
 import flixel.input.actions.FlxActionInput;
@@ -27,7 +27,7 @@ class MusicBeatSubstate extends FlxSubState
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
-	#if mobileC
+	#if (mobileC || mobileCweb)
 	var virtualPad:FlxVirtualPad;
 	var trackedInputsVirtualPad:Array<FlxActionInput> = [];
 
@@ -67,14 +67,14 @@ class MusicBeatSubstate extends FlxSubState
 
 	override function destroy()
 	{
-		#if mobileC
+		#if (mobileC || mobileCweb)
 		if (trackedInputsVirtualPad.length > 0)
 			controls.removeVirtualControlsInput(trackedInputsVirtualPad);
 		#end
 
 		super.destroy();
 
-		#if mobileC
+		#if (mobileC || mobileCweb)
 		if (virtualPad != null)
 		{
 			virtualPad = FlxDestroyUtil.destroy(virtualPad);
