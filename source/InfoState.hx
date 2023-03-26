@@ -42,13 +42,19 @@ class InfoState extends MusicBeatState
 		kadeLogo.alpha = 0.8;
 		add(kadeLogo);
 
-		#if mobileC
+		#if mobileCweb
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
 			"DISCLAIMER!"
-			+ "\n\nIf you're a Content Creator, then you should maybe skip Revenge since its Copyrighted!\nThere's a small WHITE FLASH on Suit Up but should'nt be too bad!\n\nThis Mod is still not Done!!\n\nPress Space or ESCAPE or ENTER or Touch Your Screen to proceed"
+			+ "\n\nIf you're a Content Creator, then you should maybe skip Revenge since its Copyrighted!\nThere's a small WHITE FLASH on Suit Up but should'nt be too bad!\n\nThis Mod is still not Done!!\n\nTouch Your Screen or Press Space or ESCAPE or ENTER to proceed"
 
 			);
-                #else
+                #elseif mobileC
+                var txt:FlxText = new FlxText(0, 0, FlxG.width,
+			"DISCLAIMER!"
+			+ "\n\nIf you're a Content Creator, then you should maybe skip Revenge since its Copyrighted!\nThere's a small WHITE FLASH on Suit Up but should'nt be too bad!\n\nThis Mod is still not Done!!\n\Touch Your Screen to proceed"
+
+			);
+                #elseif (!mobileC || !mobileCweb)
                 var txt:FlxText = new FlxText(0, 0, FlxG.width,
 			"DISCLAIMER!"
 			+ "\n\nIf you're a Content Creator, then you should maybe skip Revenge since its Copyrighted!\nThere's a small WHITE FLASH on Suit Up but should'nt be too bad!\n\nThis Mod is still not Done!!\n\nPress Space or ESCAPE or ENTER to proceed"
@@ -88,11 +94,19 @@ class InfoState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (controls.BACK || controls.ACCEPT #if mobileC || FlxG.mouse.pressed #end)
+		if (controls.BACK || controls.ACCEPT)
 		{
 			leftState = true;
 			FlxG.switchState(new MainMenuState());
 		}
+                #if (mobileC || mobileCweb)
+                for (touch in FlxG.touches.list)
+		if (touch.justPressed)
+                {
+			leftState = true;
+			FlxG.switchState(new MainMenuState());
+		}
+                #end
 		super.update(elapsed);
 	}
 }
