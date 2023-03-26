@@ -38,11 +38,12 @@
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
 	<set name="BUILD_DIR" value="export/32bit" if="32bit" />
 
-        <define name="mobileC" if="mobile" /><!-- can enabled on desktop and html5 platfroms (if someone fixed the html5 bug lmfao) -->
+        <define name="mobileCweb" if="web" unless="mobileCweb"/>
+        <define name="mobileC" if="mobile" unless="mobileC"/>
 
 	<classpath name="source" />
 
-        <assets path="mobile" rename="assets/mobile" if="mobileC" />
+        <assets path="mobile" rename="assets/mobile" if="mobileC || mobileCweb" />
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3" unless="web"/>
@@ -149,7 +150,7 @@
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
         
 	<!--Allow working memory greater than 1 Gig-->
-	<haxedef name="HXCPP_GC_BIG_BLOCKS" />
+	<!--<haxedef name="HXCPP_GC_BIG_BLOCKS" />-->
 
 	<!--Always enable Null Object Reference check-->
 	<haxedef name="HXCPP_CHECK_POINTER" />
@@ -159,9 +160,6 @@
 	<section if="android">
                 <!--DONT EDIT OR DELETE THIS-->
                 <certificate path="key.keystore" password="123456" alias="stev" alias-password="123456" />
-
-                <!--Allow It's Game-->
-                <config:android isGame="true" />
 
                 <!--Allow Record Internal Audio-->
                 <config:android target-sdk-version="30" />
