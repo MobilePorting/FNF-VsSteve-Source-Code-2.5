@@ -40,12 +40,17 @@ class DifficultyInfo extends MusicBeatState
 		difficInfo.screenCenter();
 		add(difficInfo);
 
-		#if mobileC
+                #if mobileC
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"Touch Your Screen or Enter to Proceed\n"
+			"Touch Your Screen to Proceed\n"
 
 			);
-                #else
+		#elseif mobileCweb
+		var txt:FlxText = new FlxText(0, 0, FlxG.width,
+			"Touch Your Screen or Press Enter to Proceed\n"
+
+			);
+                #elseif (!mobileC || !mobileCweb)
                 var txt:FlxText = new FlxText(0, 0, FlxG.width,
 			"Press Enter to Proceed\n"
 
@@ -77,13 +82,23 @@ class DifficultyInfo extends MusicBeatState
 			leftStateWarn = true;
 			FlxG.switchState(new MainMenuState());
 		}
-		else if (#if mobileC FlxG.mouse.pressed || #end controls.ACCEPT)
+		else if (controls.ACCEPT)
 		{
                         ExtrasState.selectedBonus = false;
                         ExtrasState.selectedOthers = false;
 			leftStateWarn = true;
 			FlxG.switchState(new FreeplayState());
 		}
+                #if (mobileC || mobileCweb)
+                for (touch in FlxG.touches.list)
+		if (touch.justPressed)
+                {
+                        ExtrasState.selectedBonus = false;
+                        ExtrasState.selectedOthers = false;
+			leftStateWarn = true;
+			FlxG.switchState(new FreeplayState());
+		}
+                #end
 		super.update(elapsed);
 	}
 }
