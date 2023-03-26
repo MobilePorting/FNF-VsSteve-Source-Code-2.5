@@ -1679,7 +1679,7 @@ class PlayState extends MusicBeatState
 		doof.cameras = [camHUD];
 		hotbar.cameras = [camHUD];
 
-                #if mobileC addMobileControls(); #end
+                #if (mobileC || mobileCweb) addMobileControls(); #end
 
 		if(SONG.song.toLowerCase() == 'entity')
 			vignette.cameras = [camHUD];
@@ -1743,7 +1743,7 @@ class PlayState extends MusicBeatState
 		if (!loadRep)
 			rep = new Replay("na");
 
-                #if mobileC
+                #if (mobileC || mobileCweb)
                 addVirtualPad(NONE, A_B);
                 addVirtualPadCamera();
                 #end
@@ -1900,7 +1900,7 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
-                #if mobileC mobileControls.visible = true; #end
+                #if (mobileC || mobileCweb) mobileControls.visible = true; #end
 
 		inCutscene = false;
 
@@ -3065,7 +3065,7 @@ class PlayState extends MusicBeatState
 		}
 		if(SONG.song.toLowerCase() == 'suit up')
 		{
-		if (#if mobileC virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
+		if (#if (mobileC || mobileCweb) virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
 		{
 			boyfriend.playAnim('block', true);
 			if(oneTimeUse == false)
@@ -4111,7 +4111,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
-                mobileControls.visible = false;
+                #if (mobileC || mobileCweb) mobileControls.visible = false; #end
 
 		/*if (!loadRep)
 			rep.SaveReplay(saveNotes);
@@ -5265,7 +5265,7 @@ class PlayState extends MusicBeatState
 
 		function bfBlock()
 		{
-			if (#if mobileC virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
+			if (#if (mobileC || mobileCweb) virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
 			{
 				boyfriend.playAnim('block', true);
 				if(oneTimeUse == false)
@@ -5376,7 +5376,7 @@ class PlayState extends MusicBeatState
 
 		function detectSpace()
 		{
-			if (#if mobileC virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
+			if (#if (mobileC || mobileCweb) virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
 			{
 				pressCounter += 1;
 				trace('tap');
