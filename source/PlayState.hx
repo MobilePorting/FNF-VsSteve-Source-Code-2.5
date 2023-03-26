@@ -423,7 +423,7 @@ class PlayState extends MusicBeatState
 					add(fgTrees);
 
 					var bgTrees:FlxSprite = new FlxSprite(repositionShit - 380, -800);
-					var treetex = Paths.getPackerAtlas('weeb/weebTrees','week6');
+					var treetex = Paths.getPackerAtlas('weeb/weebTrees');
 					bgTrees.frames = treetex;
 					bgTrees.animation.add('treeLoop', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 12);
 					bgTrees.animation.play('treeLoop');
@@ -431,7 +431,7 @@ class PlayState extends MusicBeatState
 					add(bgTrees);
 
 					var treeLeaves:FlxSprite = new FlxSprite(repositionShit, -40);
-					treeLeaves.frames = Paths.getSparrowAtlas('weeb/petals','week6');
+					treeLeaves.frames = Paths.getSparrowAtlas('weeb/petals');
 					treeLeaves.animation.addByPrefix('leaves', 'PETALS ALL', 24, true);
 					treeLeaves.animation.play('leaves');
 					treeLeaves.scrollFactor.set(0.85, 0.85);
@@ -480,7 +480,7 @@ class PlayState extends MusicBeatState
 					var posY = 200;
 
 					var bg:FlxSprite = new FlxSprite(posX, posY);
-					bg.frames = Paths.getSparrowAtlas('weeb/animatedEvilSchool','week6');
+					bg.frames = Paths.getSparrowAtlas('weeb/animatedEvilSchool');
 					bg.animation.addByPrefix('idle', 'background 2', 24);
 					bg.animation.play('idle');
 					bg.scrollFactor.set(0.8, 0.9);
@@ -968,7 +968,7 @@ class PlayState extends MusicBeatState
 					curStage = 'awwman';
 					defaultCamZoom = 0.9;
 			    	var creeper:FlxSprite = new FlxSprite();
-					creeper.frames = Paths.getSparrowAtlas('awwman/awwman', 'shared');
+					creeper.frames = Paths.getSparrowAtlas('awwman/awwman');
 					creeper.animation.addByPrefix('idle', 'awwman stars', 24, true);
 				    creeper.animation.play('idle');
 					creeper.y -= 1000;
@@ -1391,7 +1391,7 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == 'suit up')
 		{
 			achievementBlock = new FlxSprite(1100, 300);
-			achievementBlock.frames = Paths.getSparrowAtlas('achievement/Block', 'shared');
+			achievementBlock.frames = Paths.getSparrowAtlas('achievement/Block');
 			achievementBlock.animation.addByPrefix('Block', 'ACHD', 24, false);
 			achievementBlock.antialiasing = false;
 			achievementBlock.alpha = 0;

@@ -52,8 +52,13 @@ class FreeplayState extends MusicBeatState
 
 		if (ExtrasState.selectedOthers == true) {
 		initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplayOthers')); }
+		        #if web
+                if (ExtrasState.selectedBonus == true) {
+                initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplayBonusP')); }
+                #else
                 if (ExtrasState.selectedBonus == true) {
                 initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplayBonus')); }
+                #end
                 if (ExtrasState.selectedOthers == false && ExtrasState.selectedBonus == false) {
                 initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist')); }
 

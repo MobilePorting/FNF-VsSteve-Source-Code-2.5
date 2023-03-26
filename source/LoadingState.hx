@@ -120,7 +120,7 @@ class LoadingState extends MusicBeatState
 				checkLoadSong(getSongPath());
 				if (PlayState.SONG.needsVoices)
 					checkLoadSong(getVocalPath());
-				checkLibrary("shared");
+				//checkLibrary("shared");
                                 FlxGraphic.defaultPersist = false;
                                 setLoadingText("Done!");
 				var fadeTime = 0.5;
@@ -209,8 +209,7 @@ class LoadingState extends MusicBeatState
 	{
 		Paths.setCurrentLevel("week" + PlayState.storyWeek);
 		var loaded = isSoundLoaded(getSongPath())
-			&& (!PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath()))
-			&& isLibraryLoaded("shared");
+			&& (!PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath()));
 		
 		if (!loaded)
 			return new LoadingState(target, stopMusic);
