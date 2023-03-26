@@ -90,7 +90,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
-                #if android
+                #if (mobileC || mobileCweb)
 		addVirtualPad(UP_DOWN, A);
                 addVirtualPadCamera();
 		#end
@@ -106,17 +106,17 @@ class PauseSubState extends MusicBeatSubstate
 		var oldOffset:Float = 0;
 		var songPath = 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
 
-		if (#if android virtualPad.buttonUp.justPressed || #end controls.UP_P)
+		if (controls.UP_P)
 		{
 			changeSelection(-1);
    
-		}else if (#if android virtualPad.buttonDown.justPressed || #end controls.DOWN_P)
+		}else if (controls.DOWN_P)
 		{
 			changeSelection(1);
 		}
 		
 		#if cpp
-			else if (#if android virtualPad.buttonLeft.justPressed || #end controls.LEFT_P)
+			else if (controls.LEFT_P)
 			{
 				oldOffset = PlayState.songOffset;
 				PlayState.songOffset -= 1;
@@ -143,7 +143,7 @@ class PauseSubState extends MusicBeatSubstate
 					cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 					offsetChanged = true;
 				}
-			}else if (#if android virtualPad.buttonRight.justPressed || #end controls.RIGHT_P)
+			}else if (controls.RIGHT_P)
 			{
 				oldOffset = PlayState.songOffset;
 				PlayState.songOffset += 1;
@@ -171,7 +171,7 @@ class PauseSubState extends MusicBeatSubstate
 			}
 		#end
 
-		if (#if android virtualPad.buttonA.justPressed || #end controls.ACCEPT)
+		if (controls.ACCEPT)
 		{
 			var daSelected:String = menuItems[curSelected];
 
