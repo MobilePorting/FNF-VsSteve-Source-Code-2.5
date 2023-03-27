@@ -1679,7 +1679,7 @@ class PlayState extends MusicBeatState
 		doof.cameras = [camHUD];
 		hotbar.cameras = [camHUD];
 
-                #if (mobileC || mobileCweb) addMobileControls(); #end
+                #if (mobileC || mobileCweb) if(FlxG.save.data.mobileC){addMobileControls();} #end
 
 		if(SONG.song.toLowerCase() == 'entity')
 			vignette.cameras = [camHUD];
@@ -1744,11 +1744,13 @@ class PlayState extends MusicBeatState
 			rep = new Replay("na");
 
                 #if mobileC
+                if (FlxG.save.data.mobileC) {
                 addVirtualPad(NONE, A_B);
-                addVirtualPadCamera();
+                addVirtualPadCamera(); }
                 #elseif mobileCweb
+                if (FlxG.save.data.mobileC) {
                 addVirtualPad(NONE, P_A_B);
-                addVirtualPadCamera();
+                addVirtualPadCamera(); }
                 #end
 
 		super.create();
@@ -1903,7 +1905,7 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
-                #if (mobileC || mobileCweb) mobileControls.visible = true; #end
+                #if (mobileC || mobileCweb) if(FlxG.save.data.mobileC){mobileControls.visible = true;} #end
 
 		inCutscene = false;
 
@@ -3075,7 +3077,7 @@ class PlayState extends MusicBeatState
 		}
 		if(SONG.song.toLowerCase() == 'suit up')
 		{
-		if (#if (mobileC || mobileCweb) virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
+		if (#if (mobileC || mobileCweb) FlxG.save.data.mobileC && virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
 		{
 			boyfriend.playAnim('block', true);
 			if(oneTimeUse == false)
@@ -3117,7 +3119,7 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() != 'practice' || SONG.song.toLowerCase() != 'entity')
 		{
 
-                var accepted = #if (mobileC || mobileCweb) virtualPad.buttonA.justPressed || #end FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.regenPotionBind)]);
+                var accepted = #if (mobileC || mobileCweb) FlxG.save.data.mobileC && virtualPad.buttonA.justPressed || #end FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.regenPotionBind)]);
 
                         if (accepted && oneTimeUse == false) {
 				if(SONG.song.toLowerCase() == 'suit up')
@@ -4121,7 +4123,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
-                #if (mobileC || mobileCweb) mobileControls.visible = false; #end
+                #if (mobileC || mobileCweb) if(FlxG.save.data.mobileC){mobileControls.visible = false;} #end
 
 		/*if (!loadRep)
 			rep.SaveReplay(saveNotes);
@@ -5275,7 +5277,7 @@ class PlayState extends MusicBeatState
 
 		function bfBlock()
 		{
-			if (#if (mobileC || mobileCweb) virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
+			if (#if (mobileC || mobileCweb) FlxG.save.data.mobileC && virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
 			{
 				boyfriend.playAnim('block', true);
 				if(oneTimeUse == false)
@@ -5386,7 +5388,7 @@ class PlayState extends MusicBeatState
 
 		function detectSpace()
 		{
-			if (#if (mobileC || mobileCweb) virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
+			if (#if (mobileC || mobileCweb) FlxG.save.data.mobileC && virtualPad.buttonB.justPressed || #end FlxG.keys.justPressed.SPACE)
 			{
 				pressCounter += 1;
 				trace('tap');

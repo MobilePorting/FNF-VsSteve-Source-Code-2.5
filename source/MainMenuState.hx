@@ -596,11 +596,19 @@ class MainMenuState extends MusicBeatState
 				System.exit(0);
 
 			case 'credits':
+			    #if (!mobileC || !mobileCweb)
 				FlxG.switchState(new WarnCreditState());
+				#else
+				if (FlxG.save.data.mobileC) {
+				haxe.Log.trace('Credits is unstable with mobile controls sorry', null);
+				openfl.Lib.application.window.alert(errMsg, 'Error!');
+				FlxG.switchState(new MainMenuState());
+				} else {
+				FlxG.switchState(new WarnCreditState());
+				#end
 			case 'bonus':
 				FlxG.switchState(new ExtrasState());
 				trace("extras");
-			
 		}
 	}
 
