@@ -16,6 +16,9 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import lime.system.System;
+#if !desktop
+import openfl.Lib;
+#end
 
 #if windows
 import Discord.DiscordClient;
@@ -593,18 +596,20 @@ class MainMenuState extends MusicBeatState
 				FlxG.switchState(new OptionsMenu());
 
 			case 'quit':
+			    #if !web
 				System.exit(0);
+				#else
+				FlxG.camera.shake(0.05, 0.05);
+				#end
 
 			case 'credits':
-			    #if (!mobileC || !mobileCweb)
+			    #if desktop
 				FlxG.switchState(new WarnCreditState());
 				#else
-				if (FlxG.save.data.mobileC) {
-				haxe.Log.trace('Credits is unstable with mobile controls sorry', null);
-				openfl.Lib.application.window.alert(errMsg, 'Error!');
+				var msg = 'Credits is so unstable in mobile/web sorry';
+				//haxe.Log.trace(msg, null);
+				Lib.application.window.alert(msg, 'Error!');
 				FlxG.switchState(new MainMenuState());
-				} else {
-				FlxG.switchState(new WarnCreditState());
 				#end
 			case 'bonus':
 				FlxG.switchState(new ExtrasState());
