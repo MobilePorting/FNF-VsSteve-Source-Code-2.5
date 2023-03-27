@@ -1743,8 +1743,11 @@ class PlayState extends MusicBeatState
 		if (!loadRep)
 			rep = new Replay("na");
 
-                #if (mobileC || mobileCweb)
+                #if mobileC
                 addVirtualPad(NONE, A_B);
+                addVirtualPadCamera();
+                #elseif mobileCweb
+                addVirtualPad(NONE, P_A_B);
                 addVirtualPadCamera();
                 #end
 
