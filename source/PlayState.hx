@@ -3107,7 +3107,7 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() != 'practice' || SONG.song.toLowerCase() != 'entity')
 		{
 
-                var accepted = #if android virtualPad.buttonA.justPressed || #end FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.regenPotionBind)]);
+                var accepted = #if (mobileC || mobileCweb) virtualPad.buttonA.justPressed || #end FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.regenPotionBind)]);
 
                         if (accepted && oneTimeUse == false) {
 				if(SONG.song.toLowerCase() == 'suit up')
