@@ -52,9 +52,13 @@ class FreeplayState extends MusicBeatState
 
 		if (ExtrasState.selectedOthers == true) {
 		initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplayOthers')); }
-		        #if web
+		#if web
                 if (ExtrasState.selectedBonus == true) {
-                initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplayBonusP')); }
+                if (FlxG.save.data.mobileC) {
+                initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplayBonusP'));
+                } else {
+                initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplayBonus')); }
+                }
                 #else
                 if (ExtrasState.selectedBonus == true) {
                 initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplayBonus')); }
@@ -192,14 +196,14 @@ class FreeplayState extends MusicBeatState
                 #end
 
 		#if mobileC
-		        if (FlxG.save.data.mobileC) {
+		if (FlxG.save.data.mobileC) {
                 if (ExtrasState.selectedBonus == true) {
 		addVirtualPad(UP_DOWN, A_B_C); }
                 if (ExtrasState.selectedBonus == false) {
                 addVirtualPad(LEFT_FULL, A_B_C); }
                 }
 		#elseif mobileCweb
-		        if (FlxG.save.data.mobileC) {
+		if (FlxG.save.data.mobileC) {
                 if (ExtrasState.selectedBonus == true) {
 		addVirtualPad(UP_DOWN, A_B); }
                 if (ExtrasState.selectedBonus == false) {
